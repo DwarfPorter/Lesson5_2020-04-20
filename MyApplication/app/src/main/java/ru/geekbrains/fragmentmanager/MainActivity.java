@@ -41,6 +41,13 @@ public class MainActivity extends AppCompatActivity {
         replace2.setOnClickListener(new ListenerOnReplace(fragment2));
         Button replace3 = findViewById(R.id.replace3);
         replace3.setOnClickListener(new ListenerOnReplace(fragment3));
+
+        findViewById(R.id.return1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().popBackStack();
+            }
+        });
     }
 
     class ListenerOnAdd implements View.OnClickListener {
@@ -62,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             // Добавить фрагмент
             fragmentTransaction.add(R.id.fragment_container, fragment);
+            fragmentTransaction.addToBackStack("");
             // Закрыть транзакцию
             fragmentTransaction.commit();
         }
@@ -105,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
         private void replaceFragment() {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);
+            fragmentTransaction.addToBackStack("");
             fragmentTransaction.commit();
         }
 
