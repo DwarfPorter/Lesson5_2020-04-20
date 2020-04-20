@@ -10,7 +10,7 @@ public class CoatOfArmsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_coat_o_f_arms);
+        setContentView(R.layout.activity_coat_of_arms);
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
             finish();

@@ -16,38 +16,49 @@ import android.widget.TextView;
  */
 public class CoatOfArmsFragment extends Fragment {
 
+    public static final String PARCEL = "PARCEL";
+
     public CoatOfArmsFragment() {
         // Required empty public constructor
     }
 
     // Фабричный метод создания фрагмента
     // Фрагменты рекомендуется создавать через фабричные методы.
-    public static CoatOfArmsFragment create(int index) {
+    public static CoatOfArmsFragment create(Parcel index) {
         CoatOfArmsFragment f = new CoatOfArmsFragment();    // создание
 
         // Передача параметра
         Bundle args = new Bundle();
-        args.putInt("index", index);
+        args.putSerializable(PARCEL, index);
         f.setArguments(args);
         return f;
     }
 
     // Получить индекс из списка (фактически из параметра)
     public int getIndex() {
-        int index = getArguments().getInt("index", 0);
-        return index;
+        return getParcel().getImageIndex();
+    }
+
+    public Parcel getParcel(){
+        Parcel parcel = (Parcel) getArguments().getSerializable(PARCEL);
+        return parcel;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Определить какой герб надо показать, и показать его
-        ImageView coatOfArms = new ImageView(getContext());
+        View layout = inflater.inflate(R.layout.fragment_coat_of_arms, container, false);
+
+        ImageView coatOfArms = layout.findViewById(R.id.imageView);
+        TextView cityName = layout.findViewById(R.id.textView);
 
         // Получить из ресурсов массив указателей на изображения гербов
         TypedArray imgs = getResources().obtainTypedArray(R.array.coatofarms_imgs);
         // Выбрать по индексу подходящий
-        coatOfArms.setImageResource(imgs.getResourceId(getIndex(), -1));
-        return coatOfArms;     // Вместо макета используем сразу картинку
+        coatOfArms.setImageResource(imgs.getResourceId(getParcel().getImageIndex(), -1));
+        cityName.setText(getParcel().getCityName());
+        return layout;     // Вместо макета используем сразу картинку
     }
 }
